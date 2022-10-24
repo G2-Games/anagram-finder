@@ -1,5 +1,9 @@
 #!/bin/bash
-word=$1
+word=$(echo $1 | xargs)
+if [[ $word = "" ]]; then
+    echo "usage: ./anagram.sh <word>"
+    exit 1
+fi
 wordsorted=$(echo $word | grep -o . | sort | tr -d "\n")
 lines=$(grep -xin -- "$wordsorted" sortedwords.txt | sed -e 's/:.*//g')
 if [[ $lines = "" ]]; then
